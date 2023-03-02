@@ -1,0 +1,254 @@
+
+
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" >Hii,</a>
+      <a  >Admin</a>
+      <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button> -->
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <!-- <li class="nav-item active">
+            <a class="nav-link">User </a>
+          </li> -->
+          <!-- <li class="nav-item">
+            <a class="nav-link" >Link</a>
+          </li> -->
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" >Action</a>
+              <a class="dropdown-item" >Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" >Something else here</a>
+            </div>
+          </li> -->
+          <!-- <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li> -->
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button disabled class="btn btn-outline-success my-2 my-sm-0" type="button">Search</button>
+        </form>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+   <div style="align-items: center; margin-top: 20px; margin-left: 900px;">
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group mr-2" role="group" aria-label="First group">
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalForCreatUser" data-whatever="@getbootstrap">Create User</button>
+      </div>
+      <div class="btn-group mr-2" role="group" aria-label="Second group">
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalForCreatRole" data-whatever="@getbootstrap">Create Role</button>
+      </div>
+      <div class="btn-group" role="group" aria-label="Third group">
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalForCreatPermission" data-whatever="@getbootstrap">Create Permission</button>
+      </div>
+    </div>
+   </div>
+
+<div style=" margin-top: 20px;">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="form-group w-100 mx-4">
+        <label class="mx-2">Roles List</label>
+        <select class="form-control" name="usergroup_name" id="user_name"  >
+          <option selected value="-1">Select Role</option>
+          <option   value={{item.role_Id}} *ngFor="let item of roleListArray">{{item.role_Name}}</option>
+      </select>
+    </div>
+    <div class="form-group w-100 mx-4">
+      <label class="mx-2">Permissions List</label>
+      <select class="form-control" name="usergroup_name" id="user_name"  >
+        <option selected value="-1">Select Role</option>
+        <option   value={{item.role_Id}} *ngFor="let item of permissionListArray">{{item.permission_Name}}</option>
+    </select>
+        <!-- <ng-multiselect-dropdown
+  [placeholder]="'custom placeholder'"
+  [settings]="dropdownSettings"
+  [data]="dropdownList"
+
+  (onSelect)="onItemSelect($event)"
+  (onSelectAll)="onSelectAll($event)"
+>
+</ng-multiselect-dropdown> -->
+        <!-- <select class="form-control" name="usergroup_name" id="user_name"  >
+            <option selected value="-1">Select Permissons</option>
+        </select> -->
+        <!-- <ng-select [multiple]="true" >
+          <ng-option>
+           Hii</ng-option>
+           <ng-option>Byy</ng-option>
+        </ng-select> -->
+    </div>
+
+
+    <div class="form-group w-100 mt-4">
+      <button type="button" class="btn btn-light">Assign permissons to role</button>
+    </div>
+  </div>
+</div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">S no</th>
+          <th scope="col">Name</th>
+          <th scope="col">Mobile No</th>
+          <th scope="col">Email</th>
+          <!-- <th scope="col">Role</th> -->
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user_list_data of userListArray | paginate: { itemsPerPage: 5, currentPage: p }; let i=index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{user_list_data.name}}</td>
+          <td>{{user_list_data.mobile_no}}</td>
+          <td>{{user_list_data.email}}</td>
+          <!-- <td *ngIf=user_list_data.role.role_Name>{{user_list_data.role.role_Name}}</td> -->
+          <td>{{user_list_data.Status}}</td>
+          <td>
+
+            <div class="dropdown">
+              <i class="fa fa-ellipsis-v" aria-hidden="true" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item">View</a>
+                <a class="dropdown-item"(click)="delteUser(user_list_data.user_id)"  >Delete</a>
+              </div>
+            </div>
+
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-end" style="margin-top: 30px;">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+
+  </main>
+
+<!-- modal for creat userstrt-->
+<div class="modal fade" id="modalForCreatUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New User </h5>
+        <button type="button" class="close" data-dismiss="modal" id="close_modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="userData">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input formControlName="name" type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Mobile No:</label>
+            <input formControlName="mobile_no" type="text" class="form-control" id="recipient-name">
+            <span class="text-danger" *ngIf="mobile_no && mobile_no.invalid  ">Please enter a valid activity name</span>
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Email:</label>
+            <input formControlName="email" type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Status:</label>
+            <input formControlName="Status" type="text" class="form-control" id="recipient-name">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary"(click)="createUser()" >Create User</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal for creat userEnd-->
+
+<!-- modal for creat rolestrt-->
+<div class="modal fade" id="modalForCreatRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Role </h5>
+        <button type="button" class="close"  data-dismiss="modal"  id="close_modal_role" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="roleData">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Role Name:</label>
+            <input formControlName="role_Name" type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Role Status:</label>
+            <input formControlName="role_Status" type="text" class="form-control" id="recipient-name">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="createRole()">Create Role</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal for creat roleEnd-->
+
+<!-- modal for creat permissionsstrt-->
+<div class="modal fade" id="modalForCreatPermission" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Permission </h5>
+        <button type="button" class="close" id="close_modal_p" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="permissonData">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Permisson Name:</label>
+            <input formControlName="permission_Name" type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Permission Status</label>
+            <input formControlName="permission_Status" type="text" class="form-control" id="recipient-name">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="createPermisons()">Create Permission</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal for creat permissionsEnd-->
+
+  <footer>
+    <span class="copyright">
+      © {{test | date: 'yyyy'}}, made with <i style="color: red
+      ;" class="fa fa-heart heart "></i> by Subham
+  </span>
+  </footer>
+
+</body>
+
+
